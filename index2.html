@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة مستر صلاح عيد للكيمياء — 01007235605 | تصميم محمد صلاح</title>
+    <!-- وسوم المعاينة الاحترافية عند مشاركة رابط GitHub Pages على واتساب وتليجرام -->
+    <meta name="description" content="منصة مستر صلاح عيد للكيمياء — بنك تفاعلي شامل لمنهج الصف الثاني الثانوي — البكالوريا المصرية 2026 (26 درساً) | إعداد مستر صلاح عيد 01007235605 • تصميم محمد صلاح">
+    <meta property="og:title" content="منصة مستر صلاح عيد للكيمياء — البكالوريا المصرية 2026">
+    <meta property="og:description" content="بنك تفاعلي شامل لمنهج الصف الثاني الثانوي — البكالوريا المصرية 2026 (26 درساً) بأحدث أنماط التقييم العالمية | إعداد مستر صلاح عيد 01007235605 • تصميم محمد صلاح">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#060B18">
+    <!-- أيقونة الشعار الذهبي MS ✦ A ✦ I في تبويب المتصفح -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23F9E9A8'/%3E%3Cstop offset='50%25' stop-color='%23D4AF37'/%3E%3Cstop offset='100%25' stop-color='%23996A1D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='116' height='60' rx='16' fill='%23050505' stroke='url(%23g)' stroke-width='2.2'/%3E%3Crect x='6' y='6' width='108' height='52' rx='13' fill='none' stroke='url(%23g)' stroke-width='0.9' opacity='0.8'/%3E%3Ctext x='60' y='41' text-anchor='middle' font-family='Georgia,serif' font-size='23' font-weight='bold' fill='url(%23g)'%3EMS✦A✦I%3C/text%3E%3C/svg%3E">
+    <!-- تحميل Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- تحميل خط Cairo العربي و JetBrains Mono و Cinzel للشعار الذهبي -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serifLogo: ['Cinzel', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+        }
+        .chem-eq {
+            font-family: 'JetBrains Mono', monospace;
+            direction: ltr;
+            unicode-bidi: embed;
+            display: inline-block;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* خلفية الجزيئات التفاعلية */
+        #chemCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body.fx-off #chemCanvas,
+        body.fx-off .aurora-orb {
+            display: none !important;
+        }
+
+        /* هالات ضوئية محيطية في الوضع الغامق */
+        .aurora-orb {
+            position: fixed;
+            border-radius: 9999px;
+            filter: blur(85px);
+            opacity: 0.22;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatOrb 12s ease-in-out infinite alternate;
+        }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(28px, -24px) scale(1.12); }
+        }
+
+        /* حركة دخول الصفحات */
+        .page-enter {
+            animation: pageSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes pageSlideIn {
+            from { opacity: 0; transform: translateY(10px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* تدرج أورورا متحرك للبطاقة الرئيسية */
+        .aurora-hero {
+            background: linear-gradient(125deg, #0c1938, #1e1b4b, #0e3a5c, #132a4f);
+            background-size: 260% 260%;
+            animation: auroraShift 9s ease infinite;
+        }
+        @keyframes auroraShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* توهج ذهبي نيوني للشعار والبطاقات */
+        .gold-logo-glow {
+            box-shadow: 0 0 16px rgba(212, 175, 55, 0.32), 0 0 32px rgba(212, 175, 55, 0.14);
+        }
+        .glow-card {
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+        .glow-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px -8px rgba(6, 182, 212, 0.28);
+        }
+
+        /* بريق Shimmer */
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -120%;
+            width: 70%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+            transform: skewX(-20deg);
+            animation: shimmerSweep 3.4s infinite;
+        }
+        @keyframes shimmerSweep {
+            0% { left: -120%; }
+            45% { left: 160%; }
+            100% { left: 160%; }
+        }
+
+        /* اهتزاز تنبيهي عند الخطأ */
+        .shake-anim {
+            animation: shakeX 0.36s ease-in-out;
+        }
+        @keyframes shakeX {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            50% { transform: translateX(6px); }
+            75% { transform: translateX(-4px); }
+        }
+
+        /* نقاط XP طائرة */
+        .xp-float {
+            position: fixed;
+            z-index: 90;
+            pointer-events: none;
+            font-weight: 900;
+            animation: xpRise 1.15s ease-out forwards;
+        }
+        @keyframes xpRise {
+            0% { opacity: 0; transform: translate(-50%, 8px) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -10px) scale(1.1); }
+            100% { opacity: 0; transform: translate(-50%, -62px) scale(1); }
+        }
+
+        /* شرارات النقر */
+        .tap-spark {
+            position: fixed;
+            width: 7px;
+            height: 7px;
+            border-radius: 9999px;
+            pointer-events: none;
+            z-index: 85;
+            animation: sparkFly 0.55s ease-out forwards;
+        }
+        @keyframes sparkFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+        }
+
+        /* بطاقة 3D قابلة للقلب */
+        .flip-wrap { perspective: 1000px; }
+        .flip-inner {
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        .flip-inner.is-flipped { transform: rotateY(180deg); }
+        .flip-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .flip-back {
+            transform: rotateY(180deg);
+            position: absolute;
+            inset: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 dark:bg-[#060B18] text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300 selection:bg-cyan-400 selection:text-slate-950">
+
+    <!-- خلفية الجزيئات التفاعلية والهالات الضوئية -->
+    <canvas id="chemCanvas"></canvas>
+    <div class="aurora-orb w-72 h-72 bg-cyan-500 -top-20 -right-16"></div>
+    <div class="aurora-orb w-80 h-80 bg-indigo-600 bottom-10 -left-24" style="animation-delay: -4s;"></div>
+
+    <!-- ==================== الهيكل الرئيسي للتطبيق (App Shell متعدد الصفحات) ==================== -->
+    <div class="relative z-10 flex min-h-screen">
+
+        <!-- القائمة الجانبية الثابتة للكمبيوتر والتابلت الكبير -->
+        <aside class="hidden lg:flex lg:flex-col lg:w-72 shrink-0 bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl border-l border-slate-200 dark:border-slate-800/90 sticky top-0 h-screen p-4 justify-between">
+            <div class="space-y-4">
+                <!-- شعار المنصة الذهبي MS ✦ A ✦ I والهوية -->
+                <div class="p-3 rounded-2xl bg-slate-100/90 dark:bg-[#070A12] border border-amber-500/35 space-y-2.5 text-center">
+                    <div class="mx-auto w-44 rounded-xl overflow-hidden gold-logo-glow cursor-pointer" onclick="navigateTo('home')">
+                        <svg viewBox="0 0 320 120" class="w-full h-auto block" aria-label="شعار MS A I">
+                            <defs>
+                                <linearGradient id="goldMainSide" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#FFF2B8"/>
+                                    <stop offset="28%" stop-color="#E2BC5A"/>
+                                    <stop offset="55%" stop-color="#C99B35"/>
+                                    <stop offset="80%" stop-color="#F1D682"/>
+                                    <stop offset="100%" stop-color="#9A6D1E"/>
+                                </linearGradient>
+                                <linearGradient id="goldBorderSide" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#B88A2E"/>
+                                    <stop offset="50%" stop-color="#F7E39C"/>
+                                    <stop offset="100%" stop-color="#A67921"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="320" height="120" rx="22" fill="#050505"/>
+                            <rect x="6" y="6" width="308" height="108" rx="19" fill="none" stroke="url(#goldBorderSide)" stroke-width="2.2"/>
+                            <rect x="11" y="11" width="298" height="98" rx="15" fill="none" stroke="url(#goldBorderSide)" stroke-width="1" opacity="0.85"/>
+                            <g fill="url(#goldMainSide)" font-family="'Cinzel', Georgia, serif" font-weight="700">
+                                <text x="80" y="84" text-anchor="middle" font-size="68">M</text>
+                                <text x="133" y="85" text-anchor="middle" font-size="70">S</text>
+                                <path d="M174 49 L177.2 57.8 L186 61 L177.2 64.2 L174 73 L170.8 64.2 L162 61 L170.8 57.8 Z"/>
+                                <text x="210" y="84" text-anchor="middle" font-size="66">A</text>
+                                <path d="M244 49 L247.2 57.8 L256 61 L247.2 64.2 L244 73 L240.8 64.2 L232 61 L240.8 57.8 Z"/>
+                                <text x="272" y="84" text-anchor="middle" font-size="66">I</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-black text-sm leading-tight text-slate-900 dark:text-white">منصة مستر صلاح عيد للكيمياء</div>
+                        <button onclick="copyPhone()" class="mt-1 text-[11px] font-mono text-amber-600 dark:text-amber-300 hover:underline font-bold">📞 01007235605 (نسخ)</button>
+                    </div>
+                </div>
+
+                <!-- روابط الصفحات الـ 5 -->
+                <nav id="desktopNav" class="space-y-1.5"></nav>
+            </div>
+
+            <!-- بطاقة الرتبة والتصميم أسفل القائمة الجانبية -->
+            <div class="space-y-2.5">
+                <div class="rounded-2xl bg-gradient-to-br from-cyan-500/10 to-indigo-500/10 border border-cyan-500/25 p-3 space-y-1.5">
+                    <div class="flex items-center justify-between text-xs font-extrabold">
+                        <span id="sidebarRank">🧪 باحث كيميائي</span>
+                        <span id="sidebarXP" class="font-mono text-cyan-400">0 XP</span>
+                    </div>
+                    <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                        <div id="sidebarProgress" class="h-full bg-gradient-to-l from-cyan-400 to-indigo-500 transition-all duration-500" style="width: 5%"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px] text-slate-500 dark:text-slate-400 font-bold">
+                    <!-- يمين: الشعار الذهبي المصغر على الموبايل + عنوان الصفحة الحالية -->
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <button onclick="navigateTo('home')" class="lg:hidden w-16 h-9 rounded-xl overflow-hidden shrink-0 gold-logo-glow border border-amber-500/40 bg-[#050505]" aria-label="منصة مستر صلاح عيد للكيمياء">
+                            <svg viewBox="0 0 320 120" class="w-full h-full block">
+                                <defs>
+                                    <linearGradient id="goldMainMob" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFF2B8"/>
+                                        <stop offset="50%" stop-color="#D4AF37"/>
+                                        <stop offset="100%" stop-color="#9A6D1E"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect width="320" height="120" rx="22" fill="#050505"/>
+                                <rect x="8" y="8" width="304" height="104" rx="18" fill="none" stroke="url(#goldMainMob)" stroke-width="3.5"/>
+                                <g fill="url(#goldMainMob)" font-family="'Cinzel', Georgia, serif" font-weight="700">
+                                    <text x="80" y="84" text-anchor="middle" font-size="68">M</text>
+                                    <text x="133" y="85" text-anchor="middle" font-size="70">S</text>
+                                    <path d="M174 49 L177.2 57.8 L186 61 L177.2 64.2 L174 73 L170.8 64.2 L162 61 L170.8 57.8 Z"/>
+                                    <text x="210" y="84" text-anchor="middle" font-size="66">A</text>
+                                    <path d="M244 49 L247.2 57.8 L256 61 L247.2 64.2 L244 73 L240.8 64.2 L232 61 L240.8 57.8 Z"/>
+                                    <text x="272" y="84" text-anchor="middle" font-size="66">I</text>
+                                </g>
+                            </svg>
+                        </button>
+                        <div class="min-w-0">
+                            <h1 id="headerPageTitle" class="font-black text-sm sm:text-base truncate leading-tight">منصة مستر صلاح عيد للكيمياء</h1>
+                            <p id="headerPageSub" class="text-[10px] sm:text-xs text-slate-500 dark:text-cyan-300/80 font-bold truncate">إعداد مستر صلاح عيد 01007235605 • تصميم محمد صلاح</p>
+                        </div>
+                    </div>
+
+                    <!-- يسار: أزرار التحكم السريعة (XP + السلسلة + المعادلات + المؤثرات + الصوت + المظهر) -->
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <div class="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-300 text-xs font-black">
+                            <span>🔥</span><span id="headerStreak">0</span>
+                        </div>
+                        <div class="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 text-xs font-black font-mono">
+                            <span id="headerXP">0</span><span>XP</span>
+                        </div>
+                        <button onclick="openEquationsModal()" title="صندوق المعادلات في لمحة" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 hover:border-cyan-400 flex items-center justify-center text-sm transition">
+                            📐
+                        </button>
+                        <button id="fxToggleBtn" onclick="toggleVisualFX()" title="تشغيل/إيقاف المؤثرات البصرية" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-sm transition">
+                            ✨
+                        </button>
+                        <button id="soundToggleBtn" onclick="toggleSoundFX()" title="تشغيل/كتم المؤثرات الصوتية" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-indigo-500/15 border border-indigo-500/40 text-indigo-400 flex items-center justify-center text-sm transition">
+                            🔊
+                        </button>
+                        <button onclick="toggleTheme()" title="تبديل الوضع الليلي/النهاري" class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 hover:border-amber-400 flex items-center justify-center text-sm transition">
+                            <span id="themeToggleIcon">☀️</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- حاوية الصفحة الحالية (تتبدل بالكامل بدون تمرير طولي ممل) -->
+            <main id="pageContainer" class="flex-1 px-3 sm:px-6 py-4 sm:py-5"></main>
+        </div>
+    </div>
+
+    <!-- شريط التنقل السفلي الثابت للموبايل (5 صفحات مستقلة) -->
+    <nav id="mobileBottomNav" class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#080F20]/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-2 py-1.5 grid grid-cols-5 gap-1 shadow-[0_-8px_30px_rgba(0,0,0,0.35)]"></nav>
+
+    <!-- نافذة صندوق المعادلات المرجعي السريع -->
+    <div id="equationsModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-5 bg-slate-950/75 backdrop-blur-sm">
+        <div class="w-full max-w-2xl max-h-[86vh] rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-cyan-500/30 shadow-2xl flex flex-col overflow-hidden page-enter">
+            <div class="px-5 py-3.5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="font-black text-base text-slate-900 dark:text-white">📐 صندوق المعادلات والقوانين في لمحة</h2>
+                    <p class="text-[11px] text-slate-500 dark:text-cyan-300 font-bold">مرجع سريع لجميع قوانين الكتاب (الفصل الأول والثاني)</p>
+                </div>
+                <button onclick="closeEquationsModal()" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 font-black text-sm">✕</button>
+            </div>
+            <div id="equationsModalBody" class="p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs"></div>
+        </div>
+    </div>
+
+    <!-- شريط إشعارات منبثق أنيق (بديل آمن تماماً لـ alert) -->
+    <div id="toastBox" class="fixed top-16 left-1/2 -translate-x-1/2 z-[95] hidden max-w-sm w-[90%] rounded-2xl bg-slate-900/95 dark:bg-cyan-950/95 text-white px-4 py-2.5 shadow-2xl border border-cyan-400/40 text-xs font-extrabold text-center backdrop-blur-md"></div>
+
+    <script>
+        /* ============================================================================
+           دالة توليد الشعار الذهبي الفاخر MS ✦ A ✦ I
+           ============================================================================ */
+        function getBrandLogoSVG(uid, extraClass) {
+            return `
+                <svg viewBox="0 0 320 120" class="${extraClass || 'w-44 h-auto'}" aria-label="شعار MS A I">
+                    <defs>
+                        <linearGradient id="gm_${uid}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FFF2B8"/>
+                            <stop offset="28%" stop-color="#E2BC5A"/>
+                            <stop offset="55%" stop-color="#C99B35"/>
+                            <stop offset="80%" stop-color="#F1D682"/>
+                            <stop offset="100%" stop-color="#9A6D1E"/>
+                        </linearGradient>
+                        <linearGradient id="gb_${uid}" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#B88A2E"/>
+                            <stop offset="50%" stop-color="#F7E39C"/>
+                            <stop offset="100%" stop-color="#A67921"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="320" height="120" rx="22" fill="#050505"/>
+                    <rect x="6" y="6" width="308" height="108" rx="19" fill="none" stroke="url(#gb_${uid})" stroke-width="2.2"/>
+                    <rect x="11" y="11" width="298" height="98" rx="15" fill="none" stroke="url(#gb_${uid})" stroke-width="1" opacity="0.85"/>
+                    <g fill="url(#gm_${uid})" font-family="'Cinzel', Georgia, serif" font-weight="700">
+                        <text x="80" y="84" text-anchor="middle" font-size="68">M</text>
+                        <text x="133" y="85" text-anchor="middle" font-size="70">S</text>
+                        <path d="M174 49 L177.2 57.8 L186 61 L177.2 64.2 L174 73 L170.8 64.2 L162 61 L170.8 57.8 Z"/>
+                        <text x="210" y="84" text-anchor="middle" font-size="66">A</text>
+                        <path d="M244 49 L247.2 57.8 L256 61 L247.2 64.2 L244 73 L240.8 64.2 L232 61 L240.8 57.8 Z"/>
+                        <text x="272" y="84" text-anchor="middle" font-size="66">I</text>
+                    </g>
+                </svg>
+            `;
+        }
+
+        /* ============================================================================
+           1. بيانات المنهج الكامل (26 درساً من كتاب البكالوريا المصرية 2026)
+           ============================================================================ */
+        const CURRICULUM = [
+            // الفصل الأول: حالات المادة (13 درساً)
+            { id: '1-1', ch: 1, title: 'تغيرات الحالة', topics: ['درجة الحرارة المطلقة K = t + 273', 'حرارة الانصهار والتبخر', 'قوى فاندر فالز والرابطة الهيدروجينية'] },
+            { id: '1-2', ch: 1, title: 'اتزان السائل والبخار وضغط البخار', topics: ['الاتزان الديناميكي', 'ضغط البخار المشبع', 'شرط الغليان وعمود الزئبق 760 mmHg'] },
+            { id: '1-3', ch: 1, title: 'مخطط الطور', topics: ['منحنى الانصهار والغليان والتسامي', 'النقطة الثلاثية', 'النقطة الحرجة والمائع فوق الحرج'] },
+            { id: '1-4', ch: 1, title: 'قوانين الغازات', topics: ['قانون بويل P₁V₁=P₂V₂', 'قانون شارل V₁/T₁=V₂/T₂', 'قانون الغاز الموحد'] },
+            { id: '1-5', ch: 1, title: 'معادلة الغاز المثالي', topics: ['PV = nRT', 'ثابت الغازات R = 8.31×10³', 'تحديد الكتلة المولية M'] },
+            { id: '1-6', ch: 1, title: 'الضغط الكلي والضغط الجزئي', topics: ['قانون دالتون للضغوط الجزئية', 'الكسر المولي', 'الغاز المجمع فوق الماء'] },
+            { id: '1-7', ch: 1, title: 'الغاز المثالي والغاز الحقيقي', topics: ['معامل الانضغاط Z = PV/nRT', 'تأثير الحجم الجزيئي وقوى التجاذب', 'معادلة فاندر فالز'] },
+            { id: '1-8', ch: 1, title: 'خصائص المحاليل', topics: ['القطبية والذوبان', 'المولارية والمولالية', 'قانون هنري وإعادة التبلور'] },
+            { id: '1-9', ch: 1, title: 'ارتفاع درجة الغليان وانخفاض درجة التجمد', topics: ['Δt = K·m', 'تأثير الإلكتروليتات', 'ظاهرة التبريد الفائق ومنحنى التبريد'] },
+            { id: '1-10', ch: 1, title: 'الضغط الأسموزي', topics: ['الغشاء شبه المنفذ', 'قانون فانت هوف π = cRT', 'الأسموزية العكسية لتحلية المياه'] },
+            { id: '1-11', ch: 1, title: 'الغرويات (المحاليل الغروية)', topics: ['تأثير تندال والحركة البراونية', 'الديلزة والهجرة الكهربية', 'الترسيب بالأملاح والتخثر والغروي الواقي'] },
+            { id: '1-12', ch: 1, title: 'بنية البلورات الفلزية', topics: ['BCC و FCC و HCP', 'عدد التناسق وعدد الذرات', 'كفاءة التعبئة ونصف القطر الذري'] },
+            { id: '1-13', ch: 1, title: 'بنية البلورات الأيونية', topics: ['بنية NaCl و CsCl', 'العدد التناسقي للأيونات', 'حساب كثافة البلورة'] },
+            // الفصل الثاني: التغير والاتزان في المادة (13 درساً)
+            { id: '2-1', ch: 2, title: 'التفاعلات الكيميائية وتغيرات الإنثالبي', topics: ['التفاعل الطارد (-ΔH) والماص (+ΔH)', 'إنثالبي الاحتراق والتكوين', 'إنثالبي الذوبان والتعادل'] },
+            { id: '2-2', ch: 2, title: 'قانون هس', topics: ['ثبات التغير الكلي في الإنثالبي', 'جمع وعكس المعادلات الحرارية', 'طاقة الرابطة (إنثالبي الرابطة)'] },
+            { id: '2-3', ch: 2, title: 'الخلية الكهروكيميائية (1) خلية دانيال', topics: ['متسلسلة الجهود الكهربية', 'تفاعل الأنود والكاثود', 'زيادة زمن التفريغ بالتركيزات'] },
+            { id: '2-4', ch: 2, title: 'الخلية الكهروكيميائية (2) خلايا متنوعة', topics: ['بطارية الرصاص الحمضية', 'خلية وقود الهيدروجين', 'ثابت فاراداي F = 9.65×10⁴'] },
+            { id: '2-5', ch: 2, title: 'التفاعلات عند الأقطاب الكهربائية (1)', topics: ['التحليل الكهربائي للأقطاب الخاملة والنشطة', 'اختزال الماء والفلزات', 'غشاء التبادل الأيوني لإنتاج NaOH'] },
+            { id: '2-6', ch: 2, title: 'التحليل الكهربائي (2) كمية الكهرباء', topics: ['Q = I × t = n(e⁻)·F', 'توصيل خليتين على التوالي', 'التنقية الكهربية للنحاس وطمي الأنود'] },
+            { id: '2-7', ch: 2, title: 'سرعة التفاعل', topics: ['معدل التفاعل والمعاملات المتكافئة', 'قانون السرعة v = k[A]ᵃ[B]ᵇ', 'ثابت السرعة k ودرجة الحرارة'] },
+            { id: '2-8', ch: 2, title: 'العوامل المؤثرة في سرعة التفاعل', topics: ['التركيز والحرارة ومساحة السطح والضوء', 'طاقة التنشيط والحالة الانتقالية', 'العامل الحفاز والمحفز الثلاثي'] },
+            { id: '2-9', ch: 2, title: 'الاتزان الكيميائي', topics: ['التفاعل الانعكاسي والديناميكي', 'قانون فعل الكتلة وثابت الاتزان K', 'جداول ICE لحساب التراكيز'] },
+            { id: '2-10', ch: 2, title: 'مبدأ لوشاتيليه', topics: ['تأثير التركيز والضغط والحرارة', 'تأثير الغاز الخامل والحفاز', 'تصنيع الأمونيا (عملية هابر)'] },
+            { id: '2-11', ch: 2, title: 'الاتزان الأيوني', topics: ['الإلكتروليتات القوية والضعيفة', 'ثابت التفكك Ka و α = √(Ka/c)', 'حاصل تأين الماء Kw والأس الهيدروجيني pH'] },
+            { id: '2-12', ch: 2, title: 'الأملاح والمحاليل المائية', topics: ['طرد الأحماض والقواعد الضعيفة', 'تصنيف الأملاح (حمضي/قاعدي/متعادل)', 'آلية عمل المحلول المنظم'] },
+            { id: '2-13', ch: 2, title: 'حاصل الإذابة (Ksp)', topics: ['اتزان الذوبانية للملح شحيح الذوبان', 'مقارنة الحاصل الأيوني بـ Ksp', 'التنبؤ بحدوث الترسيب'] }
+        ];
+
+        /* ============================================================================
+           2. صندوق المعادلات المرجعي السريع (مستخرج مباشرةً من الكتاب)
+           ============================================================================ */
+        const EQUATIONS_REF = [
+            { title: 'درجة الحرارة المطلقة (1-1)', eq: 'T(K) = t(°C) + 273', note: 'الفرق في °C يساوي الفرق في K' },
+            { title: 'كمية الحرارة للتسخين (1-1)', eq: 'Q = m · c · Δt', note: 'للماء: c = 4.2 J/(g·°C)' },
+            { title: 'وحدات الضغط القياسي (1-2)', eq: '1 atm = 1.013×10⁵ Pa = 760 mmHg', note: 'الغليان: ضغط البخار = الضغط الجوي' },
+            { title: 'قانون الغاز الموحد (1-4)', eq: 'P₁V₁ / T₁ = P₂V₂ / T₂', note: 'يجب تحويل T إلى كلفن [K]' },
+            { title: 'معادلة الغاز المثالي (1-5)', eq: 'P·V = n·R·T = (w/M)·R·T', note: 'R = 8.31×10³ Pa·L/(mol·K)' },
+            { title: 'قانون دالتون والكسر المولي (1-6)', eq: 'Pₐ = P_total · Xₐ', note: 'فوق الماء: P_gas = P_atm - P_H₂O' },
+            { title: 'معامل الانضغاط (1-7)', eq: 'Z = P·V / (n·R·T)', note: 'مثالي: Z=1 | تجاذب: Z<1 | حجم: Z>1' },
+            { title: 'ارتفاع الغليان وانخفاض التجمد (1-9)', eq: 'Δt = K · m', note: 'للإلكتروليت تضرب m في عدد الأيونات' },
+            { title: 'قانون فانت هوف للأسموزية (1-10)', eq: 'π = c · R · T   (πV = nRT)', note: 'c هو التركيز المولاري [mol/L]' },
+            { title: 'البلورات الفلزية (1-12)', eq: 'BCC: r=(√3/4)a | FCC: r=(√2/4)a', note: 'ذرات الخلية: BCC=2, FCC=4, HCP=2' },
+            { title: 'كمية الكهرباء وفاراداي (2-4 / 2-6)', eq: 'Q = I · t = n(e⁻) · F', note: 'F = 9.65×10⁴ C/mol' },
+            { title: 'قانون سرعة التفاعل (2-7)', eq: 'v = k [A]ᵃ [B]ᵇ', note: 'تُحدد الرتب a, b تجريبياً فقط' },
+            { title: 'الاتزان الأيوني و pH (2-11)', eq: 'α = √(Ka / c) | pH = -log₁₀[H⁺]', note: 'عند 25°C: Kw = 1.0×10⁻¹⁴ و pH+pOH=14' },
+            { title: 'حاصل الإذابة (2-13)', eq: 'Ksp = [Aᵐ⁺]ᵃ [Bⁿ⁻]ᵇ', note: 'يحدث ترسيب إذا كان الحاصل الأيوني > Ksp' }
+        ];
+
+        /* ============================================================================
+           3. بنك الأسئلة الشامل (أنماط علم صناعة الأسئلة الحديث من واقع الكتاب المرفق)
+           ============================================================================ */
+        const QUESTION_TYPES = {
+            all: 'الكل',
+            twotier: '🎯 تشخيصي ذو مستويين',
+            hotspot: '📈 نقاط ساخنة على المنحنى',
+            cer: '⚖️ حجة علمية (CER)',
+            calc: '🧮 مسألة حسابية متدرجة',
+            ice: '🧊 جدول ICE تفاعلي',
+            match: '🧩 مطابقة وتصنيف',
+            variables: '🧪 متغيرات وتجريب',
+            error: '🔍 اكتشف الخطأ',
+            mcq: '⚡ استدلال وقدرات'
+        };
+
+        const QUESTIONS = [
+            {
+                id: 'q1', lesson: '1-1', ch: 1, type: 'calc', bloom: 'تطبيق', dok: 'DOK 2', diff: 2,
+                prompt: 'سُخِّن 36 g من الماء السائل عند 50°C حتى تحول بالكامل إلى بخار عند 100°C. احسب إجمالي كمية الحرارة الممتصة بوحدة kJ؟ (c = 4.2 J/g·°C، حرارة التبخر = 41 kJ/mol، الكتلة المولية للماء = 18 g/mol)',
+                steps: [
+                    'الخطوة ١: احسب حرارة تسخين الماء من 50°C إلى 100°C عبر Q₁ = m·c·Δt = 36 × 4.2 × 50 = 7560 J = 7.56 kJ.',
+                    'الخطوة ٢: احسب عدد مولات الماء n = 36 / 18 = 2.0 mol، ثم حرارة التبخر Q₂ = 2.0 × 41 = 82 kJ.',
+                    'الخطوة ٣: اجمع القيمتين: 7.56 + 82 = 89.56 kJ.'
+                ],
+                answer: 89.56, tolerance: 0.6, unit: 'kJ',
+                explanation: 'تُحسب الحرارة على مرحلتين: رفع درجة الحرارة (7.56 kJ) ثم حرارة التبخر الكامنة لـ 2 مول عند ثبات الحرارة (82 kJ)، والمجموع 89.56 kJ.'
+            },
+            {
+                id: 'q2', lesson: '1-1', ch: 1, type: 'error', bloom: 'تقييم', dok: 'DOK 3', diff: 2,
+                prompt: 'ادّعى طالب أن «درجة غليان H₂Te أعلى من درجة غليان H₂O لأن الكتلة الجزيئية النسبية لـ H₂Te أكبر بكثير». قيّم هذا الادعاء وحدد التصويب العلمي الأدق:',
+                options: [
+                    'الادعاء خطأ؛ لأن جزيئات الماء ترتبط بروابط هيدروجينية قوية تجعل درجة غليانه (100°C) أعلى بكثير من H₂Te.',
+                    'الادعاء صحيح؛ فالكتلة الجزيئية هي العامل الوحيد الذي يحدد درجة الغليان.',
+                    'الادعاء خطأ؛ لأن الماء مركب أيوني بينما H₂Te تساهمي.',
+                    'الادعاء خطأ؛ لأن الكتلة المولية للماء أكبر من H₂Te.'
+                ],
+                correct: 0,
+                explanation: 'الروابط الهيدروجينية بين جزيئات الماء أقوى بكثير من قوى فاندر فالز في H₂Te رغم كبر كتلته الجزيئية.'
+            },
+            {
+                id: 'q3', lesson: '1-2', ch: 1, type: 'cer', bloom: 'تحليل وتقييم', dok: 'DOK 3', diff: 2,
+                prompt: 'ابْنِ حجة علمية متكاملة (CER) للإجابة عن: لماذا يتبخر إيثر ثنائي الإيثيل أسرع من الماء عند 20°C؟',
+                claimOptions: ['إيثر ثنائي الإيثيل يتبخر بسهولة أكبر من الماء.', 'الماء يتبخر أسرع لأن كتلته المولية أقل.'],
+                evidenceOptions: ['من منحنى ضغط البخار: ضغط بخار الإيثر أعلى بكثير من الماء عند 20°C.', 'حجم الإناء الذي يوضع فيه الإيثر أكبر من إناء الماء.'],
+                reasoningOptions: ['القوى بين الجزيئية في الإيثر أضعف فتتغلب جزيئات أكثر على التجاذب وتهرب للطور الغازي.', 'جزيئات الإيثر تتكسر روابطها التساهمية بسهولة.'],
+                correctCER: [0, 0, 0],
+                explanation: 'حجة CER مكتملة: الادعاء (الإيثر أسرع تبخراً) + الدليل (ضغط بخاره أعلى بالمنحنى) + الاستدلال (ضعف قوى التجاذب بين جزيئاته مقارنة بالروابط الهيدروجينية بالماء).'
+            },
+            {
+                id: 'q4', lesson: '1-3', ch: 1, type: 'hotspot', bloom: 'تحليل', dok: 'DOK 3', diff: 2,
+                prompt: 'في مخطط الطور للماء أدناه، انقر مباشرةً على «النقطة الثلاثية» التي تتواجد عندها الحالات الصلبة والسائلة والغازية معاً في حالة اتزان:',
+                graphId: 'phase_water',
+                hotspots: [
+                    { id: 'solid', label: 'منطقة الصلب', x: 64, y: 52, correct: false },
+                    { id: 'triple', label: 'النقطة الثلاثية', x: 112, y: 88, correct: true },
+                    { id: 'critical', label: 'النقطة الحرجة', x: 214, y: 34, correct: false },
+                    { id: 'super', label: 'مائع فوق حرج', x: 250, y: 20, correct: false }
+                ],
+                explanation: 'النقطة الثلاثية هي نقطة تقاطع المنحنيات الثلاثة (الانصهار وضغط البخار والتسامي)، وعندها تتزن الحالات الثلاث معاً.'
+            },
+            {
+                id: 'q5', lesson: '1-4', ch: 1, type: 'twotier', bloom: 'فهم وتحليل', dok: 'DOK 2', diff: 2,
+                prompt: 'عند زيادة الضغط المؤثر على عينة غاز داخل مكبس محكم مع ثبات درجة الحرارة، يقل حجم الغاز (قانون بويل).',
+                tier1Question: 'المستوى (١): ماذا يحدث لحجم جزيئات الغاز نفسها؟',
+                tier1Options: ['تتقلص جزيئات الغاز ويصبح حجمها أصغر', 'لا يتغير حجم الجزيئات بل تقل المسافات البينية بينها', 'تتحول جزيئات الغاز إلى سائل فوراً'],
+                tier1Correct: 1,
+                tier2Question: 'المستوى (٢): اختر التبرير العلمي الصحيح (لكشف التصور الخطأ):',
+                tier2Options: ['لأن جزيئات الغاز متباعدة جداً وزيادة الضغط تقرّبها دون تغيير حجم الجزيء نفسه.', 'لأن الضغط يكسر الروابط داخل الجزيء فيصغر حجمه.', 'لأن عدد مولات الغاز يقل بزيادة الضغط.'],
+                tier2Correct: 0,
+                explanation: 'تصحيح التصور الخطأ الوارد بصفحة 17 في الكتاب: جزيئات الغاز لا تتقلص، وإنما تقل المسافة بين الجزيئات فقط.'
+            },
+            {
+                id: 'q6', lesson: '1-5', ch: 1, type: 'calc', bloom: 'تطبيق', dok: 'DOK 2', diff: 2,
+                prompt: 'احسب عدد مولات غاز (n) يشغل حجماً قدره 8.31 L عند درجة حرارة 27°C وضغط 3.0×10⁵ Pa. (علماً بأن R = 8.31×10³ Pa·L/mol·K)',
+                steps: [
+                    'الخطوة ١: حوّل درجة الحرارة إلى الكلفن: T = 27 + 273 = 300 K.',
+                    'الخطوة ٢: استخدم معادلة الغاز المثالي n = (P·V) / (R·T).',
+                    'الخطوة ٣: عوّض: n = (3.0×10⁵ × 8.31) / (8.31×10³ × 300) = 1.0 mol.'
+                ],
+                answer: 1.0, tolerance: 0.05, unit: 'mol',
+                explanation: 'بتحويل الحرارة إلى 300 K والتعويض في PV = nRT نجد أن عدد المولات n = 1.0 mol بدقة.'
+            },
+            {
+                id: 'q7', lesson: '1-6', ch: 1, type: 'mcq', bloom: 'تطبيق', dok: 'DOK 2', diff: 1,
+                prompt: 'عينة من غاز الهيدروجين جُمعت فوق الماء عند ضغط جوي 101 kPa، وكان ضغط بخار الماء عند نفس الحرارة 3 kPa. ما الضغط الجزئي لغاز الهيدروجين؟',
+                options: ['98 kPa', '104 kPa', '3 kPa', '33.6 kPa'],
+                correct: 0,
+                explanation: 'وفق قانون دالتون للغاز المجمع فوق الماء: الضغط الجزئي للغاز = الضغط الجوي - ضغط بخار الماء = 101 - 3 = 98 kPa.'
+            },
+            {
+                id: 'q8', lesson: '1-7', ch: 1, type: 'hotspot', bloom: 'تحليل', dok: 'DOK 3', diff: 3,
+                prompt: 'في منحنى معامل الانضغاط Z = PV/nRT للغاز الحقيقي أدناه، انقر على المنطقة التي يكون فيها تأثير «قوى التجاذب بين الجزيئات» هو الغالب (Z < 1):',
+                graphId: 'compress_z',
+                hotspots: [
+                    { id: 'ideal', label: 'خط الغاز المثالي Z=1', x: 75, y: 65, correct: false },
+                    { id: 'attract', label: 'منطقة Z < 1 (تجاذب)', x: 135, y: 98, correct: true },
+                    { id: 'volume', label: 'منطقة Z > 1 (حجم جزيئي)', x: 235, y: 30, correct: false }
+                ],
+                explanation: 'عند الضغوط المعتدلة تغلب قوى التجاذب بين الجزيئات فيقل الضغط الملاحظ وتصبح Z < 1، بينما عند الضغوط العالية جداً يغلب الحجم الجزيئي وتصبح Z > 1.'
+            },
+            {
+                id: 'q9', lesson: '1-8', ch: 1, type: 'mcq', bloom: 'فهم', dok: 'DOK 1', diff: 1,
+                prompt: 'لماذا تتصاعد فقاعات غاز ثاني أكسيد الكربون بقوة فور فتح زجاجة مشروب غازي؟',
+                options: [
+                    'ينخفض الضغط فوق السائل فتقل ذوبانية الغاز وفق قانون هنري.',
+                    'يرتفع الضغط الجوي فجأة داخل الزجاجة.',
+                    'يتحول السكر إلى غاز CO₂ عند ملامسة الهواء.',
+                    'تزداد ذوبانية الغازات بانخفاض الضغط.'
+                ],
+                correct: 0,
+                explanation: 'وفق قانون هنري تتناسب ذوبانية الغاز طردياً مع ضغطه؛ وبفتح الغطاء ينخفض الضغط فتقل الذوبانية وتخرج الفقاعات.'
+            },
+            {
+                id: 'q10', lesson: '1-9', ch: 1, type: 'hotspot', bloom: 'تحليل', dok: 'DOK 3', diff: 3,
+                prompt: 'في منحنى التبريد لمحلول مائي أدناه، انقر على النقطة التي تمثل «أدنى نقطة في التبريد الفائق» حيث تبدأ بلورات الثلج الأولى في التكون وترتفع الحرارة بعدها قليلاً:',
+                graphId: 'supercool',
+                hotspots: [
+                    { id: 'freeze', label: 'درجة التجمد الفعلية (a)', x: 108, y: 58, correct: false },
+                    { id: 'start_cryst', label: 'بدء التبلور بعد التبريد الفائق (b)', x: 130, y: 104, correct: true },
+                    { id: 'slope', label: 'استمرار التجمد وانخفاض الحرارة (d)', x: 222, y: 78, correct: false }
+                ],
+                explanation: 'عند النقطة (b) يصل السائل لأدنى حرارة في حالة التبريد الفائق، وفور بدء التجمد تنطلق حرارة التبلور فترتفع الحرارة قليلاً نحو الخط المستقيم.'
+            },
+            {
+                id: 'q11', lesson: '1-10', ch: 1, type: 'mcq', bloom: 'تطبيق', dok: 'DOK 2', diff: 2,
+                prompt: 'لتطبيق تقنية «الأسموزية العكسية» في تحلية مياه البحر والحصول على ماء عذب، ماذا يجب أن نفعل؟',
+                options: [
+                    'تطبيق ضغط على جانب ماء البحر أكبر من الضغط الأسموزي لإجبار الماء على العبور للجانب العذب.',
+                    'تطبيق ضغط على جانب الماء العذب لدفعه نحو ماء البحر.',
+                    'إزالة الغشاء شبه المنفذ واستبداله بورق ترشيح عادي.',
+                    'تسخين الماء العذب فقط دون أي ضغط.'
+                ],
+                correct: 0,
+                explanation: 'في الأسموزية العكسية يُطبَّق ضغط خارجي أكبر من الضغط الأسموزي على المحلول المركز (ماء البحر) فتندفع جزيئات الماء فقط عبر الغشاء.'
+            },
+            {
+                id: 'q12', lesson: '1-11', ch: 1, type: 'match', bloom: 'فهم وتصنيف', dok: 'DOK 2', diff: 2,
+                prompt: 'طابق كل ظاهرة غروية بالتفسير العلمي الصحيح لها (من درس 1-11):',
+                pairs: [
+                    { left: 'رؤية مسار ضوء مصابيح السيارة في الضباب', right: 'تأثير تندال' },
+                    { left: 'فصل الشوائب الأيونية عن الغروي بكيس سلوفان', right: 'الديلزة (Dialysis)' },
+                    { left: 'حركة عشوائية متعرجة للجسيمات الغروية', right: 'الحركة البراونية' },
+                    { left: 'ترسيب غروي كاره للماء بكمية صغيرة من إلكتروليت', right: 'التخثر (Coagulation)' }
+                ],
+                explanation: 'تمتلك الغرويات خصائص فريدة ناتجة عن الحجم المتوسط لجسيماتها (10⁻⁹ إلى 10⁻⁷ m) وشحنتها السطحية.'
+            },
+            {
+                id: 'q13', lesson: '1-12', ch: 1, type: 'mcq', bloom: 'تذكر وتطبيق', dok: 'DOK 1', diff: 1,
+                prompt: 'في البنية البلورية المكعبة مركزية الأوجه (FCC) مثل النحاس، كم يبلغ عدد الذرات في وحدة الخلية والعدد التناسقي على الترتيب؟',
+                options: ['4 ذرات — عدد تناسقي 12', '2 ذرة — عدد تناسقي 8', '2 ذرة — عدد تناسقي 12', '6 ذرات — عدد تناسقي 6'],
+                correct: 0,
+                explanation: 'في FCC: عدد الذرات = (1/8 × 8) + (1/2 × 6) = 4 ذرات، والعدد التناسقي = 12.'
+            },
+            {
+                id: 'q14', lesson: '1-13', ch: 1, type: 'mcq', bloom: 'فهم', dok: 'DOK 2', diff: 2,
+                prompt: 'في وحدة الخلية لبلورة كلوريد الصوديوم NaCl، كم عدد أيونات Na⁺ و Cl⁻ وما العدد التناسقي لكل أيون؟',
+                options: ['4 أيونات Na⁺ و 4 أيونات Cl⁻ — العدد التناسقي 6', '1 أيون Na⁺ و 1 أيون Cl⁻ — العدد التناسقي 8', '2 أيون Na⁺ و 2 أيون Cl⁻ — العدد التناسقي 4', '8 أيونات Na⁺ و 8 أيونات Cl⁻ — العدد التناسقي 12'],
+                correct: 0,
+                explanation: 'تحتوي وحدة خلية NaCl على 4 وحدات صيغة (4 أيونات من كل نوع) ويحيط بكل أيون 6 أيونات مخالفة (العدد التناسقي 6)، بينما في CsCl يكون 1 و 1 والعدد التناسقي 8.'
+            },
+            {
+                id: 'q15', lesson: '2-1', ch: 2, type: 'error', bloom: 'تقييم', dok: 'DOK 2', diff: 1,
+                prompt: 'لتفاعل كيميائي قيمة ΔH = -250 kJ. قال أحد الطلاب: «التفاعل امتص طاقة حرارية مقدارها 250 kJ لأن الرقم كبير». قيّم عبارة الطالب:',
+                options: [
+                    'العبارة خاطئة؛ الإشارة السالبة تعني أن التفاعل طارد للحرارة ويطلق 250 kJ للوسط المحيط.',
+                    'العبارة صحيحة؛ كل رقم أكبر من 100 يعني امتصاصاً للحرارة.',
+                    'العبارة صحيحة؛ لأن الإشارة السالبة تدل على نقصان حرارة الوسط.',
+                    'لا يمكن تحديد نوع التفاعل من إشارة ΔH.'
+                ],
+                correct: 0,
+                explanation: 'الإشارة السالبة (-ΔH) تدل دائماً على تفاعل طارد للحرارة يطلق طاقة للوسط المحيط فترتفع درجة حرارته.'
+            },
+            {
+                id: 'q16', lesson: '2-2', ch: 2, type: 'calc', bloom: 'تطبيق وتحليل', dok: 'DOK 3', diff: 3,
+                prompt: 'باستخدام قانون هس: إذا كان إنثالبي احتراق الجرافيت (-394 kJ/mol) وإنثالبي احتراق CO (-283 kJ/mol)، احسب إنثالبي تكوين أول أكسيد الكربون CO بوحدة kJ/mol:',
+                steps: [
+                    'الخطوة ١: معادلة (i): C + O₂ → CO₂  (ΔH₁ = -394 kJ).',
+                    'الخطوة ٢: اعكس معادلة (ii) لتصبح CO في النواتج: CO₂ → CO + ½O₂ (ΔH = +283 kJ).',
+                    'الخطوة ٣: اجمع المعادلتين: ΔH = -394 + 283 = -111 kJ/mol.'
+                ],
+                answer: -111, tolerance: 1, unit: 'kJ/mol',
+                explanation: 'بتطبيق قانون هس (i) - (ii): -394 - (-283) = -111 kJ/mol.'
+            },
+            {
+                id: 'q17', lesson: '2-3', ch: 2, type: 'mcq', bloom: 'تحليل', dok: 'DOK 2', diff: 2,
+                prompt: 'لزيادة زمن تفريغ خلية دانيال (Zn | ZnSO₄ || CuSO₄ | Cu)، كيف ينبغي اختيار التركيزات الابتدائية للمحلولين؟',
+                options: [
+                    'تركيز منخفض من ZnSO₄ وتركيز عالٍ من CuSO₄.',
+                    'تركيز عالٍ من ZnSO₄ وتركيز منخفض من CuSO₄.',
+                    'تركيز منخفض جداً لكلا المحلولين.',
+                    'التركيز لا يؤثر أبداً على زمن التفريغ.'
+                ],
+                correct: 0,
+                explanation: 'أثناء التفريغ تزداد أيونات Zn²⁺ عند الأنود وتُستهلك أيونات Cu²⁺ عند الكاثود؛ لذا نبدأ بتركيز منخفض من ZnSO₄ وعالٍ من CuSO₄.'
+            },
+            {
+                id: 'q18', lesson: '2-4', ch: 2, type: 'variables', bloom: 'تحليل تجريبي', dok: 'DOK 3', diff: 2,
+                prompt: 'يريد عالم دراسة كيف تعتمد كمية الشحنة الكهربائية الناتجة من بطارية رصاص حمضية على كتلة الرصاص المتفاعل مع تثبيت تركيز الحمض ودرجة الحرارة. حدد المتغير المستقل والتابع:',
+                indOptions: ['كتلة الرصاص المتفاعل', 'إجمالي الشحنة الكهربائية الناتجة', 'درجة حرارة الغرفة'],
+                depOptions: ['إجمالي الشحنة الكهربائية الناتجة (C)', 'تركيز حمض الكبريتيك الابتدائي', 'نوع الإناء الزجاجي'],
+                correctVars: [0, 0],
+                explanation: 'المتغير المستقل هو ما يغيّره العالم عمداً (كتلة الرصاص)، والمتغير التابع هو ما يُقاس كنتيجة (الشحنة الكهربائية بالكولوم).'
+            },
+            {
+                id: 'q19', lesson: '2-5', ch: 2, type: 'mcq', bloom: 'تحليل', dok: 'DOK 2', diff: 2,
+                prompt: 'أثناء التحليل الكهربائي لمحلول مائي مركز من كلوريد الصوديوم NaCl بأقطاب خاملة، لماذا يتصاعد غاز الهيدروجين عند الكاثود ولا يترسب فلز الصوديوم؟',
+                options: [
+                    'لأن الصوديوم أعلى نشاطاً من الهيدروجين، فيُختزل الماء عند الكاثود بدلاً من أيونات Na⁺.',
+                    'لأن أيونات الصوديوم سالبة الشحنة وتتجه نحو الأنود.',
+                    'لأن الصوديوم لا يذوب في الماء أصلاً.',
+                    'لأن الكلور يمنع الصوديوم من الوصول للكاثود.'
+                ],
+                correct: 0,
+                explanation: 'الفلزات الأعلى نشاطاً من الهيدروجين (مثل Na⁺) يصعب اختزالها في المحاليل المائية، فيُختزل الماء: 2H₂O + 2e⁻ → H₂ + 2OH⁻.'
+            },
+            {
+                id: 'q20', lesson: '2-6', ch: 2, type: 'calc', bloom: 'تطبيق', dok: 'DOK 2', diff: 2,
+                prompt: 'أُمر تيار كهربائي شدته 10 A لمدة 965 ثانية في محلول نترات الفضة AgNO₃ (الكتلة المولية للفضة = 108 g/mol، F = 9.65×10⁴ C/mol). احسب كتلة الفضة المترسبة بالجرام:',
+                steps: [
+                    'الخطوة ١: احسب كمية الكهرباء Q = I × t = 10 × 965 = 9650 C.',
+                    'الخطوة ٢: احسب مولات الإلكترونات n(e⁻) = Q / F = 9650 / 96500 = 0.10 mol.',
+                    'الخطوة ٣: من Ag⁺ + e⁻ → Ag تترسب 0.10 mol من الفضة، وكتلتها = 0.10 × 108 = 10.8 g.'
+                ],
+                answer: 10.8, tolerance: 0.2, unit: 'g',
+                explanation: 'كمية الكهرباء تعادل 0.1 فاراداي، وبما أن الفضة أحادية التكافؤ يترسب 0.1 مول = 10.8 g.'
+            },
+            {
+                id: 'q21', lesson: '2-7', ch: 2, type: 'mcq', bloom: 'تطبيق وتحليل', dok: 'DOK 2', diff: 2,
+                prompt: 'يتبع أحد التفاعلات قانون السرعة v = k [A] [B]². إذا تضاعف تركيز كل من [A] و [B] إلى الضعف في آنٍ واحد، فبأي عامل تزداد سرعة التفاعل؟',
+                options: ['8 أضعاف', '4 أضعاف', '2 ضعف', '6 أضعاف'],
+                correct: 0,
+                explanation: 'عند مضاعفة [A] تضرب السرعة في 2، وعند مضاعفة [B] تضرب في 2² = 4؛ فيكون إجمالي الزيادة 2 × 4 = 8 أضعاف.'
+            },
+            {
+                id: 'q22', lesson: '2-8', ch: 2, type: 'hotspot', bloom: 'تحليل', dok: 'DOK 3', diff: 2,
+                prompt: 'في مخطط الطاقة لتفاعل كيميائي بوجود عامل حفاز وبدونه أدناه، انقر على «قمة الحالة الانتقالية بوجود العامل الحفاز» (المسار ذو طاقة التنشيط الأقل):',
+                graphId: 'catalyst',
+                hotspots: [
+                    { id: 'uncat', label: 'قمة بدون حفاز', x: 145, y: 24, correct: false },
+                    { id: 'cat', label: 'قمة بوجود حفاز', x: 145, y: 54, correct: true },
+                    { id: 'products', label: 'النواتج', x: 240, y: 102, correct: false }
+                ],
+                explanation: 'يوفر العامل الحفاز مساراً بديلاً بطاقة تنشيط أقل دون تغيير إنثالبي التفاعل (ΔH).'
+            },
+            {
+                id: 'q23', lesson: '2-9', ch: 2, type: 'ice', bloom: 'تطبيق وتحليل', dok: 'DOK 3', diff: 3,
+                prompt: 'وُضع 5.50 mol من H₂ و 4.00 mol من I₂ في وعاء سعته 100 L، وعند الاتزان تكوّن 7.00 mol من HI حسب المعادلة: H₂ + I₂ ⇌ 2HI. أكمل جدول ICE التالي ثم احسب قيمة ثابت الاتزان K:',
+                reaction: 'H₂ + I₂ ⇌ 2HI',
+                init: [5.50, 4.00, 0],
+                expectedEq: [2.00, 0.50, 7.00],
+                expectedK: 49,
+                explanation: 'يتفاعل 3.50 mol من كل من H₂ و I₂ لتكوين 7.00 mol من HI؛ فتصبح مولات الاتزان (2.00 و 0.50 و 7.00)، وبالتعويض يكون K = 7² / (2 × 0.5) = 49.'
+            },
+            {
+                id: 'q24', lesson: '2-10', ch: 2, type: 'mcq', bloom: 'تحليل', dok: 'DOK 2', diff: 2,
+                prompt: 'في التفاعل المتزن 2NO₂(g) ⇌ N₂O₄(g) ماذا يحدث لموضع الاتزان عند إضافة غاز الأرجون الخامل (Ar) مع ثبات درجة الحرارة و«ثبات الضغط الكلي»؟',
+                options: [
+                    'يزاح نحو اليسار (العكسي) لأن الحجم يزداد فتقل الضغوط الجزئية للغازات.',
+                    'لا يتأثر موضع الاتزان إطلاقاً.',
+                    'يزاح نحو اليمين (الطردي) لتكوين مزيد من N₂O₄.',
+                    'يتوقف التفاعل تماماً بسبب الغاز الخامل.'
+                ],
+                correct: 0,
+                explanation: 'صفحة 117 بالكتاب: إضافة Ar عند ضغط كلي ثابت تزيد الحجم فيقل الضغط الجزئي، ويزاح الاتزان نحو عدد المولات الأكبر (يساراً). أما عند حجم ثابت فلا يتأثر الاتزان.'
+            },
+            {
+                id: 'q25', lesson: '2-11', ch: 2, type: 'calc', bloom: 'تطبيق', dok: 'DOK 2', diff: 2,
+                prompt: 'احسب الأس الهيدروجيني (pH) لمحلول حمض الأسيتيك تركيزه 0.10 mol/L ودرجة تفككه α = 0.016 (علماً بأن log₁₀ 1.6 = 0.2):',
+                steps: [
+                    'الخطوة ١: احسب تركيز أيون الهيدروجين [H⁺] = c × α = 0.10 × 0.016 = 1.6×10⁻³ mol/L.',
+                    'الخطوة ٢: طبّق pH = -log₁₀(1.6×10⁻³) = -(0.2 - 3).',
+                    'الخطوة ٣: الناتج pH = 2.8.'
+                ],
+                answer: 2.8, tolerance: 0.1, unit: 'pH',
+                explanation: '[H⁺] = 1.6×10⁻³ mol/L وبالتالي pH = 3 - 0.2 = 2.8.'
+            },
+            {
+                id: 'q26', lesson: '2-12', ch: 2, type: 'twotier', bloom: 'تحليل وتقييم', dok: 'DOK 3', diff: 2,
+                prompt: 'عند إذابة ملح أسيتات الصوديوم (CH₃COONa) في الماء النقي:',
+                tier1Question: 'المستوى (١): ما تأثير المحلول المائي الناتج على الأس الهيدروجيني؟',
+                tier1Options: ['متعادل دائماً (pH = 7)', 'قاعدي (pH > 7)', 'حمضي (pH < 7)'],
+                tier1Correct: 1,
+                tier2Question: 'المستوى (٢): اختر التفسير العلمي الصحيح (لكشف التصور الخطأ):',
+                tier2Options: [
+                    'لأنه ملح مشتق من حمض ضعيف (CH₃COOH) وقاعدة قوية (NaOH) فتتفاعل أيونات الأسيتات مع الماء وتنتج OH⁻.',
+                    'لأن جميع الأملاح العادية تعطي محاليل متعادلة.',
+                    'لأن أيونات الصوديوم تنتج أيونات هيدروجين H⁺.'
+                ],
+                tier2Correct: 0,
+                explanation: 'تصحيح التصور الخطأ بصفحة 128: ليست كل الأملاح متعادلة؛ فملح الحمض الضعيف + القاعدة القوية يكون محلوله قاعدياً.'
+            },
+            {
+                id: 'q27', lesson: '2-13', ch: 2, type: 'twotier', bloom: 'تقييم', dok: 'DOK 3', diff: 3,
+                prompt: 'في محلول مشبع من كلوريد الفضة AgCl يظهر راسب أبيض مستقر في قاع الكأس.',
+                tier1Question: 'المستوى (١): هل توقفت عمليتا الذوبان والترسيب تماماً؟',
+                tier1Options: ['نعم، توقفتا تماماً لأن كمية الراسب ثابتة', 'لا، تستمران معاً وبمعدلين متساويين (اتزان ديناميكي)'],
+                tier1Correct: 1,
+                tier2Question: 'المستوى (٢): متى يبدأ تكون راسب جديد في محلول مائي لملح شحيح الذوبان؟',
+                tier2Options: [
+                    'عندما يكون الحاصل الأيوني أكبر من ثابت حاصل الإذابة (Ksp).',
+                    'عندما يكون الحاصل الأيوني أقل من Ksp.',
+                    'فقط عند إضافة عامل حفاز.'
+                ],
+                tier2Correct: 0,
+                explanation: 'اتزان الذوبانية اتزان ديناميكي مستمر، ويحدث الترسيب فقط عندما يتجاوز الحاصل الأيوني قيمة Ksp.'
+            }
+        ];
+
+        /* ============================================================================
+           4. أسئلة القدرات السريعة + بطاقات الاسترجاع + دراستا الحالة للوحدتين
+           ============================================================================ */
+        const APTITUDE_QUESTIONS = [
+            { q: 'أيهما أعلى درجة غليان بدون آلة حاسبة: الماء (H₂O) أم كبريتيد الهيدروجين (H₂S)؟', opts: ['الماء H₂O (روابط هيدروجينية)', 'H₂S (كتلة مولية أكبر)', 'متساويان تماماً'], c: 0, exp: 'الروابط الهيدروجينية تجعل الماء يغلي عند 100°C مقابل -60°C لـ H₂S.' },
+            { q: 'إذا تضاعف الضغط على غاز مثالي عند ثبات درجة الحرارة، ماذا يحدث لحجمه؟', opts: ['يقل إلى النصف', 'يتضاعف مرتين', 'يبقى ثابتاً'], c: 0, exp: 'قانون بويل: العلاقة عكسية بين P و V عند ثبات T.' },
+            { q: 'أيهما يخفض درجة تجمد الماء أكثر عند نفس المولالية: 1 m جلوكوز أم 1 m كلوريد صوديوم NaCl؟', opts: ['NaCl (يتأين لأيونين فيضاعف Δt)', 'الجلوكوز (كتلته المولية أكبر)', 'لهما نفس التأثير'], c: 0, exp: 'الخواص الجمعية تعتمد على عدد الجسيمات المذابة؛ و NaCl يعطي ضعف عدد جسيمات الجلوكوز.' },
+            { q: 'عند إضافة عامل حفاز لتفاعل انعكاسي متزن، ماذا يحدث لثابت الاتزان K؟', opts: ['لا يتغير أبداً', 'يزداد للضعف', 'يقل للنصف'], c: 0, exp: 'العامل الحفاز يسرّع الوصول للاتزان فقط ولا يغيّر موضع الاتزان أو قيمة K.' },
+            { q: 'أي الأيونات التالية الأكثر فاعلية في تخثير غروي مشحون بشحنة موجبة مثل Fe(OH)₃؟', opts: ['أيون الكبريتات SO₄²⁻ (أعلى شحنة سالبة)', 'أيون الكلوريد Cl⁻', 'أيون الألومنيوم Al³⁺'], c: 0, exp: 'الأيون المخالف في الشحنة والأعلى تكافؤاً هو الأقوى في إحداث التخثر.' },
+            { q: 'في خلية دانيال، أي قطب تزداد كتلته بمرور الوقت أثناء التشغيل؟', opts: ['قطب النحاس (الكاثود)', 'قطب الخارصين (الأنود)', 'كلا القطبين'], c: 0, exp: 'تُختزل أيونات Cu²⁺ وتترسب ذرات النحاس على الكاثود فتزداد كتلته.' }
+        ];
+
+        const FLASHCARDS = [
+            { tag: 'درس ١-١', front: 'ما العلاقة بين درجة الحرارة المطلقة (K) والسيليزية (°C)؟', back: 'T(K) = t(°C) + 273\nوالفرق في درجات الحرارة ΔT متساوٍ في المقياسين.' },
+            { tag: 'درس ١-٣', front: 'ما المقصود بالمائع فوق الحرج (Supercritical Fluid)؟', back: 'حالة للمادة فوق النقطة الحرجة ينعدم فيها الفرق بين السائل والغاز (يخترق كالغاز ويذيب كالسائل كـ CO₂ لإزالة الكافيين).' },
+            { tag: 'درس ١-٥', front: 'اكتب معادلة الغاز المثالي وقيمة الثابت المولي R:', back: 'PV = nRT\nR = 8.31 × 10³ Pa·L / (mol·K)' },
+            { tag: 'درس ١-١٠', front: 'ما صيغة قانون فانت هوف للضغط الأسموزي؟', back: 'π = c · R · T   أو   πV = nRT\nحيث c التركيز المولاري [mol/L].' },
+            { tag: 'درس ٢-٢', front: 'على ماذا ينص قانون هس؟', back: 'التغير الكلي في الإنثالبي (ΔH) لتفاعل ما مقدار ثابت يعتمد فقط على الحالة الابتدائية والنهائية ولا يتأثر بمسار التفاعل.' },
+            { tag: 'درس ٢-٦', front: 'ما العلاقة بين كمية الكهرباء (Q) والتيار والزمن وثابت فاراداي؟', back: 'Q(C) = I(A) × t(s) = n(e⁻) × F\nحيث F = 9.65 × 10⁴ C/mol.' },
+            { tag: 'درس ٢-١١', front: 'لماذا تزداد درجة التفكك (α) للحمض الضعيف عند التخفيف؟', back: 'من العلاقة α = √(Ka / c) نجد أن العلاقة عكسية بين درجة التفكك والتركيز c.' },
+            { tag: 'درس ٢-١٢', front: 'كيف يقاوم المحلول المنظم (CH₃COOH / CH₃COONa) إضافة حمض H⁺؟', back: 'تتحد أيونات الأسيتات CH₃COO⁻ مع H⁺ المضافة لتكوين جزيئات CH₃COOH غير المتأينة، فيبقى pH شبه ثابت.' }
+        ];
+
+        const CASE_STUDIES = [
+            {
+                id: 'unit1',
+                title: 'دراسة حالة الوحدة الأولى: صندوق تبريد اللقاحات بدون كهرباء',
+                context: 'تصمم منظمة إنسانية صندوق تبريد لنقل اللقاحات للمناطق النائية، وتقارن بين 3 مواد للتبريد اعتماداً على جدول البيانات من صفحة 66 بالكتاب:',
+                tableHeaders: ['المادة', 'الكتلة المولية', 'حرارة الانصهار', 'حرارة التبخير', 'قوى التجاذب', 'درجة الغليان'],
+                tableRows: [
+                    ['الماء H₂O', '18 g/mol', '6.0 kJ/mol', '41 kJ/mol', 'رابطة هيدروجينية', '100°C'],
+                    ['H₂S', '34 g/mol', '2.4 kJ/mol', '18 kJ/mol', 'فاندر فالز', '-60°C'],
+                    ['HBr', '81 g/mol', '2.2 kJ/mol', '17 kJ/mol', 'فاندر فالز', '-67°C']
+                ],
+                questions: [
+                    { q: '١. تحليل البيانات: أي مادة تمتص أكبر كمية حرارة عند التحول من سائل إلى غاز؟', opts: ['الماء H₂O (41 kJ/mol)', 'HBr (17 kJ/mol)', 'H₂S (18 kJ/mol)'], c: 0, exp: 'حرارة التبخير للماء هي الأعلى بفارق كبير (41 kJ/mol) بسبب الروابط الهيدروجينية.' },
+                    { q: '٢. التقييم العلمي: قال مهندس «المادة الأثقل مولياً لها دائماً أعلى درجة غليان». ما دليلك من الجدول لدحض هذا الفرض؟', opts: ['كتلة HBr المولية (81) أكبر من الماء (18) لكنه يغلي عند -67°C بينما يغلي الماء عند 100°C.', 'الفرض صحيح تماماً بدليل أن HBr أثقل.', 'الكتلة المولية لا توجد في الجدول.'], c: 0, exp: 'قوة التجاذب بين الجزيئات (الروابط الهيدروجينية) تتفوق على عامل الكتلة المولية.' }
+                ]
+            },
+            {
+                id: 'unit2',
+                title: 'دراسة حالة الوحدة الثانية: أنظمة الطاقة المستدامة لمدينة خضراء',
+                context: 'تخطط مدينة لخفض انبعاثاتها الكربونية وتقارن بين خلايا وقود الهيدروجين، وبطارية الرصاص الحمضية، والتحليل الكهربائي للماء (صفحة 137 بالكتاب):',
+                tableHeaders: ['التقنية', 'العملية الكيميائية', 'ΔH (kJ/mol)', 'الناتج الرئيسي'],
+                tableRows: [
+                    ['خلية وقود الهيدروجين', '2H₂ + O₂ → 2H₂O', '-572 (طارد)', 'ماء نقي فقط'],
+                    ['بطارية الرصاص (تفريغ)', 'Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O', 'تطلق طاقة', 'ماء و PbSO₄'],
+                    ['التحليل الكهربائي للماء', '2H₂O → 2H₂ + O₂', '+572 (ماص)', 'هيدروجين وأكسجين']
+                ],
+                questions: [
+                    { q: '١. أي عبارة تدعمها البيانات السابقة بشكل أفضل؟', opts: ['التحليل الكهربائي للماء يمتص طاقة (+572 kJ)، بينما خلية الوقود تطلق طاقة (-572 kJ).', 'التحليل الكهربائي طارد للحرارة.', 'كلتا التقنيتين تستهلكان الماء كمتفاعل.'], c: 0, exp: 'إشارة ΔH الموجبة تعني امتصاص طاقة كهربية لتفكيك الماء، والسالبة تعني إطلاق طاقة في خلية الوقود.' },
+                    { q: '٢. مسألة فاراداي: نظام ينقل 5.0 mol من الإلكترونات، كم الشحنة الكهربائية المنتجة (F = 9.65×10⁴ C/mol)؟', opts: ['4.825 × 10⁵ C', '9.65 × 10⁴ C', '1.93 × 10⁵ C'], c: 0, exp: 'Q = n × F = 5.0 × 9.65×10⁴ = 4.825 × 10⁵ C.' }
+                ]
+            }
+        ];
+
+        /* ============================================================================
+           5. إدارة الحالة العامة (APP_STATE) + التخزين المحلي
+           ============================================================================ */
+        const NAV_ITEMS = [
+            { id: 'home', icon: '🏠', label: 'الرئيسية', title: 'منصة مستر صلاح عيد للكيمياء', sub: 'إعداد مستر صلاح عيد 01007235605 • تصميم محمد صلاح' },
+            { id: 'curriculum', icon: '📚', label: 'المنهج', title: 'فهرس المنهج (26 درساً)', sub: 'البكالوريا المصرية — الصف الثاني الثانوي 2026' },
+            { id: 'bank', icon: '🧪', label: 'بنك الأسئلة', title: 'بنك الأسئلة متعدد الأنماط', sub: 'تشخيصي • منحنيات • CER • حسابي • ICE • متغيرات' },
+            { id: 'exams', icon: '⚡', label: 'الاختبارات', title: 'الاختبارات والقدرات الذكية', sub: 'اختبار تكيفي CAT • قدرات 45ث • دراسات الحالة' },
+            { id: 'studio', icon: '🎞️', label: 'العروض', title: 'العروض والبطاقات والتقارير', sub: 'بطاقات الاسترجاع النشط • شرائح العرض • تحليل بلوم' }
+        ];
+
+        const APP_STATE = {
+            page: 'home',
+            theme: 'dark',
+            fxEnabled: true,
+            soundEnabled: true,
+            currChapter: 1,
+            currSearch: '',
+            filterChapter: 'all',
+            filterLesson: 'all',
+            filterType: 'all',
+            bankSearch: '',
+            bankIdx: 0,
+            ui: {},
+            examTab: 'cat',
+            cat: { active: false, diff: 2, qIdx: 0, asked: [], score: 0, total: 6, finished: false, studentName: '' },
+            apt: { active: false, idx: 0, score: 0, timeLeft: 45, timer: null, finished: false, answered: false },
+            caseIdx: 0,
+            caseAnswers: {},
+            builder: { ch: 'all', count: 5, active: false, list: [], idx: 0, score: 0, finished: false, answered: false },
+            studioTab: 'cards',
+            cardIdx: 0,
+            cardFlipped: false,
+            slideIdx: 0,
+            slideReveal: false,
+            confirmReset: false,
+            stats: { xp: 0, streak: 0, bestStreak: 0, solvedIds: {} }
+        };
+
+        function loadSavedStats() {
+            try {
+                const raw = localStorage.getItem('chembac_salah_stats_v1');
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed.xp === 'number') {
+                        APP_STATE.stats = Object.assign({ xp: 0, streak: 0, bestStreak: 0, solvedIds: {} }, parsed);
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function saveStats() {
+            try { localStorage.setItem('chembac_salah_stats_v1', JSON.stringify(APP_STATE.stats)); } catch (e) {}
+            updateGlobalHeaderStats();
+        }
+
+        function getRankTitle(xp) {
+            if (xp >= 400) return '🏆 عبقري البكالوريا';
+            if (xp >= 220) return '⚛️ خبير كيمياء متقدم';
+            if (xp >= 100) return '🔬 محلل علمي مميز';
+            return '🧪 باحث كيميائي';
+        }
+
+        function recordAnswer(qId, isCorrect, xpGain) {
+            if (isCorrect) {
+                APP_STATE.stats.streak += 1;
+                if (APP_STATE.stats.streak > APP_STATE.stats.bestStreak) APP_STATE.stats.bestStreak = APP_STATE.stats.streak;
+                const firstTime = !APP_STATE.stats.solvedIds[qId];
+                APP_STATE.stats.solvedIds[qId] = true;
+                const gained = firstTime ? xpGain : Math.max(5, Math.floor(xpGain / 3));
+                APP_STATE.stats.xp += gained;
+                SoundFX.success();
+                VisualFX.burstConfetti();
+                VisualFX.floatXP('+' + gained + ' XP');
+            } else {
+                APP_STATE.stats.streak = 0;
+                SoundFX.error();
+            }
+            saveStats();
+        }
+
+        /* ============================================================================
+           6. محرك المؤثرات الصوتية (Web Audio API بدون روابط خارجية)
+           ============================================================================ */
+        const SoundFX = {
+            ctx: null,
+            ensure() {
+                if (!APP_STATE.soundEnabled) return null;
+                try {
+                    if (!this.ctx) {
+                        const AC = window.AudioContext || window.webkitAudioContext;
+                        if (AC) this.ctx = new AC();
+                    }
+                    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+                    return this.ctx;
+                } catch (e) { return null; }
+            },
+            tone(freq, dur, type, vol, delay = 0) {
+                const c = this.ensure();
+                if (!c) return;
+                try {
+                    const o = c.createOscillator();
+                    const g = c.createGain();
+                    o.type = type || 'sine';
+                    o.frequency.setValueAtTime(freq, c.currentTime + delay);
+                    g.gain.setValueAtTime(vol || 0.06, c.currentTime + delay);
+                    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + dur);
+                    o.connect(g);
+                    g.connect(c.destination);
+                    o.start(c.currentTime + delay);
+                    o.stop(c.currentTime + delay + dur);
+                } catch (e) {}
+            },
+            click() { this.tone(540, 0.055, 'triangle', 0.04); },
+            success() {
+                this.tone(523.25, 0.14, 'sine', 0.07, 0);
+                this.tone(659.25, 0.14, 'sine', 0.07, 0.09);
+                this.tone(783.99, 0.22, 'sine', 0.08, 0.18);
+            },
+            error() {
+                this.tone(220, 0.16, 'sawtooth', 0.045, 0);
+                this.tone(175, 0.2, 'sawtooth', 0.045, 0.11);
+            }
+        };
+
+        /* ============================================================================
+           7. محرك المؤثرات البصرية (خلفية الجزيئات + الشرارات + Confetti + XP طائر)
+           ============================================================================ */
+        const VisualFX = {
+            canvas: null, ctx: null, nodes: [], formulas: [], confetti: [],
+            mouse: { x: -999, y: -999 }, raf: null,
+            init() {
+                this.canvas = document.getElementById('chemCanvas');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', e => { this.mouse.x = e.clientX; this.mouse.y = e.clientY; });
+                window.addEventListener('touchmove', e => {
+                    if (e.touches && e.touches[0]) { this.mouse.x = e.touches[0].clientX; this.mouse.y = e.touches[0].clientY; }
+                }, { passive: true });
+                document.addEventListener('pointerdown', e => {
+                    if (APP_STATE.fxEnabled) this.tapSparks(e.clientX, e.clientY);
+                });
+                const syms = ['H₂O', 'PV=nRT', 'ΔH', 'Ksp', 'pH', 'Cu²⁺', 'NH₃', 'Z=1', 'π=cRT'];
+                this.formulas = syms.map(s => ({
+                    text: s,
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    vy: -0.18 - Math.random() * 0.22,
+                    vx: (Math.random() - 0.5) * 0.15
+                }));
+                this.seedNodes();
+                this.loop();
+            },
+            resize() {
+                if (!this.canvas) return;
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.seedNodes();
+            },
+            seedNodes() {
+                const count = window.innerWidth < 640 ? 22 : 42;
+                this.nodes = Array.from({ length: count }, () => ({
+                    x: Math.random() * this.canvas.width,
+                    y: Math.random() * this.canvas.height,
+                    vx: (Math.random() - 0.5) * 0.45,
+                    vy: (Math.random() - 0.5) * 0.45,
+                    r: 1.8 + Math.random() * 2.2
+                }));
+            },
+            tapSparks(x, y) {
+                const colors = ['#22d3ee', '#818cf8', '#34d399', '#fbbf24'];
+                for (let i = 0; i < 6; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'tap-spark';
+                    const angle = (Math.PI * 2 * i) / 6 + Math.random() * 0.4;
+                    const dist = 18 + Math.random() * 22;
+                    el.style.left = x + 'px';
+                    el.style.top = y + 'px';
+                    el.style.background = colors[i % colors.length];
+                    el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+                    el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 580);
+                }
+            },
+            burstConfetti() {
+                if (!APP_STATE.fxEnabled || !this.canvas) return;
+                const colors = ['#22d3ee', '#34d399', '#fbbf24', '#818cf8', '#f472b6'];
+                for (let i = 0; i < 42; i++) {
+                    this.confetti.push({
+                        x: this.canvas.width / 2,
+                        y: this.canvas.height * 0.35,
+                        vx: (Math.random() - 0.5) * 9,
+                        vy: -4 - Math.random() * 6,
+                        size: 4 + Math.random() * 4,
+                        color: colors[i % colors.length],
+                        life: 1
+                    });
+                }
+            },
+            floatXP(text) {
+                if (!APP_STATE.fxEnabled) return;
+                const el = document.createElement('div');
+                el.className = 'xp-float text-emerald-400 text-lg drop-shadow-lg';
+                el.style.left = '50%';
+                el.style.top = '42%';
+                el.textContent = '✨ ' + text;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1200);
+            },
+            loop() {
+                if (APP_STATE.fxEnabled && this.ctx) {
+                    const ctx = this.ctx;
+                    const w = this.canvas.width, h = this.canvas.height;
+                    ctx.clearRect(0, 0, w, h);
+                    const isDark = APP_STATE.theme === 'dark';
+
+                    ctx.font = '700 11px "JetBrains Mono", monospace';
+                    ctx.fillStyle = isDark ? 'rgba(56, 189, 248, 0.14)' : 'rgba(14, 116, 144, 0.12)';
+                    this.formulas.forEach(f => {
+                        f.y += f.vy; f.x += f.vx;
+                        if (f.y < -20) { f.y = h + 20; f.x = Math.random() * w; }
+                        ctx.fillText(f.text, f.x, f.y);
+                    });
+
+                    for (let i = 0; i < this.nodes.length; i++) {
+                        const a = this.nodes[i];
+                        a.x += a.vx; a.y += a.vy;
+                        if (a.x < 0 || a.x > w) a.vx *= -1;
+                        if (a.y < 0 || a.y > h) a.vy *= -1;
+
+                        const dm = Math.hypot(a.x - this.mouse.x, a.y - this.mouse.y);
+                        if (dm < 110) {
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(this.mouse.x, this.mouse.y);
+                            ctx.strokeStyle = isDark ? 'rgba(34,211,238,0.22)' : 'rgba(14,116,144,0.18)';
+                            ctx.stroke();
+                        }
+
+                        ctx.beginPath();
+                        ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+                        ctx.fillStyle = isDark ? 'rgba(56,189,248,0.45)' : 'rgba(2,132,199,0.28)';
+                        ctx.fill();
+
+                        for (let j = i + 1; j < this.nodes.length; j++) {
+                            const b = this.nodes[j];
+                            const d = Math.hypot(a.x - b.x, a.y - b.y);
+                            if (d < 105) {
+                                ctx.beginPath();
+                                ctx.moveTo(a.x, a.y);
+                                ctx.lineTo(b.x, b.y);
+                                ctx.strokeStyle = isDark
+                                    ? `rgba(99,102,241,${0.18 * (1 - d / 105)})`
+                                    : `rgba(79,70,229,${0.12 * (1 - d / 105)})`;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+
+                    this.confetti = this.confetti.filter(p => p.life > 0);
+                    this.confetti.forEach(p => {
+                        p.x += p.vx; p.y += p.vy; p.vy += 0.22; p.life -= 0.018;
+                        ctx.globalAlpha = Math.max(0, p.life);
+                        ctx.fillStyle = p.color;
+                        ctx.fillRect(p.x, p.y, p.size, p.size * 0.7);
+                        ctx.globalAlpha = 1;
+                    });
+                }
+                this.raf = requestAnimationFrame(() => this.loop());
+            }
+        };
+
+        /* ============================================================================
+           8. أدوات واجهة عامة (التنقل، النسخ، الإشعار، المظهر، المعادلات)
+           ============================================================================ */
+        let toastTimer = null;
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            if (!box) return;
+            box.textContent = msg;
+            box.classList.remove('hidden');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => box.classList.add('hidden'), 3200);
+        }
+
+        function copyPhone() {
+            const phone = '01007235605';
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = phone;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                SoundFX.click();
+                showToast('📞 تم نسخ رقم مستر صلاح عيد: 01007235605');
+            } catch (e) {
+                showToast('📞 رقم مستر صلاح عيد: 01007235605');
+            }
+        }
+
+        function toggleTheme() {
+            SoundFX.click();
+            APP_STATE.theme = APP_STATE.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.classList.toggle('dark', APP_STATE.theme === 'dark');
+            const icon = document.getElementById('themeToggleIcon');
+            if (icon) icon.textContent = APP_STATE.theme === 'dark' ? '☀️' : '🌙';
+            showToast(APP_STATE.theme === 'dark' ? '🌙 تم تفعيل الوضع الليلي الغامق' : '☀️ تم تفعيل الوضع النهاري');
+        }
+
+        function toggleVisualFX() {
+            SoundFX.click();
+            APP_STATE.fxEnabled = !APP_STATE.fxEnabled;
+            document.body.classList.toggle('fx-off', !APP_STATE.fxEnabled);
+            const btn = document.getElementById('fxToggleBtn');
+            if (btn) btn.style.opacity = APP_STATE.fxEnabled ? '1' : '0.45';
+            showToast(APP_STATE.fxEnabled ? '✨ تم تشغيل المؤثرات البصرية' : 'تم إيقاف المؤثرات البصرية');
+        }
+
+        function toggleSoundFX() {
+            APP_STATE.soundEnabled = !APP_STATE.soundEnabled;
+            const btn = document.getElementById('soundToggleBtn');
+            if (btn) {
+                btn.textContent = APP_STATE.soundEnabled ? '🔊' : '🔇';
+                btn.style.opacity = APP_STATE.soundEnabled ? '1' : '0.5';
+            }
+            if (APP_STATE.soundEnabled) SoundFX.click();
+            showToast(APP_STATE.soundEnabled ? '🔊 تم تشغيل المؤثرات الصوتية' : '🔇 تم كتم الصوت');
+        }
+
+        function openEquationsModal() {
+            SoundFX.click();
+            const modal = document.getElementById('equationsModal');
+            const body = document.getElementById('equationsModalBody');
+            body.innerHTML = EQUATIONS_REF.map(item => `
+                <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-1">
+                    <div class="font-extrabold text-cyan-700 dark:text-cyan-300 text-[11px]">${item.title}</div>
+                    <div class="chem-eq font-black text-xs text-slate-900 dark:text-white bg-slate-200/70 dark:bg-slate-900 px-2 py-1 rounded-lg">${item.eq}</div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400">${item.note}</div>
+                </div>
+            `).join('');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeEquationsModal() {
+            const modal = document.getElementById('equationsModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function updateGlobalHeaderStats() {
+            const xp = APP_STATE.stats.xp;
+            const solvedCount = Object.keys(APP_STATE.stats.solvedIds).length;
+            const pct = Math.min(100, Math.round((solvedCount / QUESTIONS.length) * 100));
+            const el = id => document.getElementById(id);
+            if (el('headerXP')) el('headerXP').textContent = xp;
+            if (el('headerStreak')) el('headerStreak').textContent = APP_STATE.stats.streak;
+            if (el('sidebarXP')) el('sidebarXP').textContent = xp + ' XP';
+            if (el('sidebarRank')) el('sidebarRank').textContent = getRankTitle(xp);
+            if (el('sidebarSolved')) el('sidebarSolved').textContent = `${solvedCount}/${QUESTIONS.length} مُتقن`;
+            if (el('sidebarProgress')) el('sidebarProgress').style.width = Math.max(5, pct) + '%';
+        }
+
+        function navigateTo(pageId) {
+            SoundFX.click();
+            if (APP_STATE.apt.timer) { clearInterval(APP_STATE.apt.timer); APP_STATE.apt.timer = null; }
+            APP_STATE.page = pageId;
+            renderNavigation();
+            renderCurrentPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openBankByChapter(ch) {
+            APP_STATE.filterChapter = String(ch);
+            APP_STATE.filterLesson = 'all';
+            APP_STATE.filterType = 'all';
+            APP_STATE.bankIdx = 0;
+            navigateTo('bank');
+        }
+
+        function openBankByLesson(lessonId) {
+            APP_STATE.filterChapter = 'all';
+            APP_STATE.filterLesson = lessonId;
+            APP_STATE.filterType = 'all';
+            APP_STATE.bankIdx = 0;
+            navigateTo('bank');
+        }
+
+        function openBankByType(typeKey) {
+            APP_STATE.filterChapter = 'all';
+            APP_STATE.filterLesson = 'all';
+            APP_STATE.filterType = typeKey;
+            APP_STATE.bankIdx = 0;
+            navigateTo('bank');
+        }
+
+        function renderNavigation() {
+            const dNav = document.getElementById('desktopNav');
+            const mNav = document.getElementById('mobileBottomNav');
+            const activeItem = NAV_ITEMS.find(n => n.id === APP_STATE.page) || NAV_ITEMS[0];
+
+            const titleEl = document.getElementById('headerPageTitle');
+            const subEl = document.getElementById('headerPageSub');
+            if (titleEl) titleEl.textContent = activeItem.title;
+            if (subEl) subEl.textContent = activeItem.sub;
+
+            if (dNav) {
+                dNav.innerHTML = NAV_ITEMS.map(item => {
+                    const active = item.id === APP_STATE.page;
+                    return `
+                        <button onclick="navigateTo('${item.id}')" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold transition ${
+                            active
+                                ? 'bg-gradient-to-l from-cyan-500 to-indigo-600 text-white shadow-lg shadow-cyan-500/25'
+                                : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
+                        }">
+                            <span class="text-base">${item.icon}</span>
+                            <span>${item.label}</span>
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            if (mNav) {
+                mNav.innerHTML = NAV_ITEMS.map(item => {
+                    const active = item.id === APP_STATE.page;
+                    return `
+                        <button onclick="navigateTo('${item.id}')" class="flex flex-col items-center justify-center py-1.5 rounded-2xl transition ${
+                            active
+                                ? 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-black'
+                                : 'text-slate-500 dark:text-slate-400 font-bold'
+                        }">
+                            <span class="text-base leading-none">${item.icon}</span>
+                            <span class="text-[10px] mt-1">${item.label}</span>
+                        </button>
+                    `;
+                }).join('');
+            }
+        }
+
+        function handleSearchInput(stateKey, value, inputId) {
+            APP_STATE[stateKey] = value;
+            if (stateKey === 'bankSearch') APP_STATE.bankIdx = 0;
+            renderCurrentPage();
+            const el = document.getElementById(inputId);
+            if (el) {
+                el.focus();
+                el.setSelectionRange(value.length, value.length);
+            }
+        }
+
+        /* ============================================================================
+           9. الصفحة 1: الرئيسية (Home Dashboard)
+           ============================================================================ */
+        function buildHomePage() {
+            const solvedCount = Object.keys(APP_STATE.stats.solvedIds).length;
+            const mastery = Math.round((solvedCount / QUESTIONS.length) * 100);
+
+            return `
+                <div class="page-enter max-w-5xl mx-auto space-y-4">
+                    <section class="aurora-hero rounded-3xl p-5 sm:p-6 text-white border border-amber-400/35 shadow-2xl relative overflow-hidden">
+                        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+                            <div class="space-y-3.5 flex-1">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <button onclick="copyPhone()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[11px] font-black hover:bg-amber-400/30 transition">
+                                        <span>👨‍🏫</span> إعداد مستر صلاح عيد • 01007235605
+                                    </button>
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-indigo-400/20 border border-indigo-300/35 text-indigo-200 text-[11px] font-bold">
+                                        <span>🎨</span> تصميم محمد صلاح
+                                    </span>
+                                </div>
+
+                                <h2 class="text-xl sm:text-3xl font-black leading-snug text-amber-200">
+                                    منصة مستر صلاح عيد للكيمياء
+                                </h2>
+                                <p class="text-xs sm:text-sm text-slate-200/95 max-w-2xl leading-relaxed">
+                                    بنك تفاعلي شامل لمنهج الصف الثاني الثانوي — البكالوريا المصرية 2026 (26 درساً) بأحدث أنماط التقييم العالمية: الاختبار التكيفي CAT، التشخيصي ذي المستويين، الحجة العلمية CER، النقاط الساخنة على المنحنيات، جداول ICE، والقدرات الموقّتة.
+                                </p>
+
+                                <div class="flex flex-wrap gap-2.5 pt-1">
+                                    <button onclick="APP_STATE.examTab='cat'; navigateTo('exams');" class="shimmer-btn px-4 py-2.5 rounded-2xl bg-gradient-to-l from-cyan-400 to-blue-500 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-cyan-500/30">
+                                        🧠 ابدأ الاختبار التكيفي الذكي (CAT)
+                                    </button>
+                                    <button onclick="navigateTo('bank')" class="px-4 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-extrabold text-xs sm:text-sm backdrop-blur">
+                                        🧪 تصفح بنك الأسئلة (${QUESTIONS.length} سؤال)
+                                    </button>
+                                    <button onclick="APP_STATE.examTab='aptitude'; navigateTo('exams');" class="px-4 py-2.5 rounded-2xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/40 text-amber-200 font-extrabold text-xs sm:text-sm">
+                                        ⚡ تحدي القدرات (45 ثانية)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="shrink-0 flex justify-center">
+                                <div class="rounded-2xl overflow-hidden gold-logo-glow border border-amber-400/45 bg-[#050505] p-1">
+                                    ${getBrandLogoSVG('hero', 'w-44 sm:w-52 h-auto block')}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">نسبة الإتقان</div>
+                            <div class="text-xl font-black text-cyan-500 mt-0.5 font-mono">${mastery}%</div>
+                            <div class="text-[10px] text-slate-500">${solvedCount} من ${QUESTIONS.length} سؤال</div>
+                        </div>
+                        <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">الرتبة العلمية</div>
+                            <div class="text-sm sm:text-base font-black text-emerald-500 mt-1">${getRankTitle(APP_STATE.stats.xp)}</div>
+                            <div class="text-[10px] text-slate-500 font-mono">${APP_STATE.stats.xp} XP</div>
+                        </div>
+                        <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-3.5">
+                            <div class="text-[11px] font-bold text-slate-500 dark:text-slate-400">سلسلة الإجابات</div>
+                            <div class="text-xl font-black text-amber-500 mt-0.5 font-mono">🔥 ${APP_STATE.stats.streak}</div>
+                            <div class="text-[10px] text-slate-500">الأفضل: ${APP_STATE.stats.bestStreak}</div>
+                        </div>
+                        <div onclick="openEquationsModal()" class="cursor-pointer glow-card rounded-2xl bg-gradient-to-br from-indigo-500/10 to-cyan-500/10 border border-indigo-500/30 p-3.5">
+                            <div class="text-[11px] font-bold text-indigo-500 dark:text-indigo-300">مرجع القوانين</div>
+                            <div class="text-sm sm:text-base font-black mt-1">📐 صندوق المعادلات</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400">14 قانوناً جاهزاً للحل</div>
+                        </div>
+                    </section>
+
+                    <section class="space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-black text-sm">🧬 اختر نمط السؤال العلمي الحديث</h3>
+                            <button onclick="navigateTo('bank')" class="text-xs font-bold text-cyan-500 hover:underline">عرض الكل ←</button>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                            ${[
+                                { k: 'hotspot', icon: '📈', t: 'نقاط ساخنة بالمنحنيات', s: 'الطور • التبريد • Z • الحفاز' },
+                                { k: 'twotier', icon: '🎯', t: 'تشخيصي ذو مستويين', s: 'كاشف التصورات الخطأ' },
+                                { k: 'cer', icon: '⚖️', t: 'الحجة العلمية CER', s: 'ادعاء • دليل • استدلال' },
+                                { k: 'calc', icon: '🧮', t: 'مسائل متدرجة', s: 'الغازات • هس • فاراداي • pH' },
+                                { k: 'ice', icon: '🧊', t: 'جداول ICE التفاعلية', s: 'حساب ثابت الاتزان K' },
+                                { k: 'match', icon: '🧩', t: 'مطابقة وتصنيف', s: 'الغرويات والظواهر' },
+                                { k: 'variables', icon: '🧪', t: 'تصميم التجارب', s: 'المتغير المستقل والتابع' },
+                                { k: 'error', icon: '🔍', t: 'اكتشف الخطأ', s: 'نقد وتصويب الادعاءات' }
+                            ].map(item => `
+                                <button onclick="openBankByType('${item.k}')" class="glow-card text-right p-3 rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-cyan-400/60">
+                                    <div class="text-lg">${item.icon}</div>
+                                    <div class="text-xs font-black mt-1">${item.t}</div>
+                                    <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">${item.s}</div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <section class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-cyan-500/30 p-4 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-600 dark:text-cyan-300">الفصل الأول • 13 درساً</span>
+                                <h4 class="font-black text-sm mt-1">حالات المادة والمحاليل والبلورات</h4>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">من تغيرات الحالة (1-1) حتى البلورات الأيونية (1-13)</p>
+                            </div>
+                            <button onclick="openBankByChapter(1)" class="shrink-0 px-3.5 py-2 rounded-xl bg-gradient-to-l from-cyan-500 to-blue-600 hover:brightness-110 text-white font-bold text-xs shadow-md shadow-cyan-500/20">أسئلة الفصل ١</button>
+                        </div>
+                        <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/80 border border-indigo-500/30 p-4 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-300">الفصل الثاني • 13 درساً</span>
+                                <h4 class="font-black text-sm mt-1">التغير الحراري والكهربية والاتزان</h4>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">من الإنثالبي وهس (2-1) حتى حاصل الإذابة (2-13)</p>
+                            </div>
+                            <button onclick="openBankByChapter(2)" class="shrink-0 px-3.5 py-2 rounded-xl bg-gradient-to-l from-indigo-600 to-violet-500 hover:brightness-110 text-white font-bold text-xs shadow-md shadow-indigo-500/20">أسئلة الفصل ٢</button>
+                        </div>
+                    </section>
+
+                    <footer class="rounded-2xl bg-white/80 dark:bg-slate-900/70 backdrop-blur border border-slate-200 dark:border-amber-500/25 p-3.5 flex flex-wrap items-center justify-between gap-2 text-xs font-bold">
+                        <span class="text-amber-600 dark:text-amber-300">👨‍🏫 منصة مستر صلاح عيد للكيمياء — <button onclick="copyPhone()" class="font-mono underline hover:text-cyan-400">01007235605</button></span>
+                        <span class="text-indigo-600 dark:text-indigo-300">🎨 تصميم محمد صلاح</span>
+                    </footer>
+                </div>
+            `;
+        }
+
+        /* ============================================================================
+           10. الصفحة 2: فهرس المنهج الكامل (26 درساً مع بحث فوري)
+           ============================================================================ */
+        function buildCurriculumPage() {
+            const q = (APP_STATE.currSearch || '').trim().toLowerCase();
+            const lessons = CURRICULUM.filter(l => {
+                if (q) return l.title.toLowerCase().includes(q) || l.id.includes(q) || l.topics.some(t => t.toLowerCase().includes(q));
+                return l.ch === APP_STATE.currChapter;
+            });
+
+            return `
+                <div class="page-enter max-w-5xl mx-auto space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-2.5">
+                        <input id="currSearchInput" type="text" value="${APP_STATE.currSearch}" oninput="handleSearchInput('currSearch', this.value, 'currSearchInput')"
+                            placeholder="🔍 ابحث عن درس أو قانون (مثال: لوشاتيليه، هس، دانيال، أسموزي، Ksp)..."
+                            class="flex-1 px-4 py-2.5 rounded-2xl bg-white/95 dark:bg-slate-900/90 border border-slate-200 dark:border-cyan-500/30 text-xs sm:text-sm font-bold focus:outline-none focus:border-cyan-400">
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="SoundFX.click(); APP_STATE.currChapter=1; APP_STATE.currSearch=''; renderCurrentPage();" class="flex-1 sm:flex-none px-4 py-2.5 rounded-2xl text-xs font-black transition ${APP_STATE.currChapter===1 && !q ? 'bg-cyan-500 text-slate-950 shadow-md' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'}">الفصل ١ (13 درساً)</button>
+                            <button onclick="SoundFX.click(); APP_STATE.currChapter=2; APP_STATE.currSearch=''; renderCurrentPage();" class="flex-1 sm:flex-none px-4 py-2.5 rounded-2xl text-xs font-black transition ${APP_STATE.currChapter===2 && !q ? 'bg-indigo-600 text-white shadow-md' : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800'}">الفصل ٢ (13 درساً)</button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        ${lessons.length ? lessons.map(l => {
+                            const count = QUESTIONS.filter(x => x.lesson === l.id).length;
+                            return `
+                                <div class="glow-card rounded-2xl bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-800 p-4 flex flex-col justify-between space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="px-2.5 py-0.5 rounded-lg text-[10px] font-black ${l.ch===1 ? 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300' : 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300'}">درس ${l.id}</span>
+                                            <span class="text-[10px] font-bold text-slate-500">${count > 0 ? count + ' سؤال مخصص' : 'مشمول بالاختبارات'}</span>
+                                        </div>
+                                        <h3 class="font-black text-sm mt-2">${l.title}</h3>
+                                        <ul class="mt-2 space-y-1">
+                                            ${l.topics.map(t => `<li class="text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5"><span class="text-cyan-500">•</span><span>${t}</span></li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    <button onclick="${count > 0 ? `openBankByLesson('${l.id}')` : `openBankByChapter(${l.ch})`}" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-xs font-extrabold transition">
+                                        ${count > 0 ? 'تدرب على أسئلة هذا الدرس ←' : 'تدرب على أسئلة الفصل ←'}
+                                    </button>
+                                </div>
+                            `;
+                        }).join('') : `<div class="col-span-full text-center py-10 text-sm font-bold text-slate-500">لا توجد دروس مطابقة للبحث.</div>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        /* ============================================================================
+           11. رسوم SVG التفاعلية لأسئلة النقاط الساخنة (Hotspots)
+           ============================================================================ */
+        function renderGraphSVG(q, selectedId, revealed) {
+            let paths = '';
+            if (q.graphId === 'phase_water') {
+                paths = `
+                    <line x1="35" y1="120" x2="285" y2="120" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="35" y1="120" x2="35" y2="12" stroke="#64748b" stroke-width="1.5"/>
+                    <path d="M 40 115 Q 82 108 112 88" fill="none" stroke="#94a3b8" stroke-width="2.2"/>
+                    <path d="M 112 88 L 96 18" fill="none" stroke="#38bdf8" stroke-width="2.4"/>
+                    <path d="M 112 88 Q 168 72 214 34" fill="none" stroke="#34d399" stroke-width="2.4"/>
+                    <rect x="214" y="10" width="68" height="24" rx="5" fill="rgba(34,211,238,0.16)" stroke="#22d3ee" stroke-dasharray="3 2"/>
+                    <text x="64" y="42" fill="#cbd5e1" font-size="10" font-weight="bold">صلب</text>
+                    <text x="150" y="42" fill="#cbd5e1" font-size="10" font-weight="bold">سائل</text>
+                    <text x="195" y="102" fill="#cbd5e1" font-size="10" font-weight="bold">غاز</text>
+                    <text x="160" y="135" text-anchor="middle" fill="#94a3b8" font-size="9">درجة الحرارة (°C)</text>
+                    <text x="16" y="68" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(-90 16,68)">الضغط Pa</text>
+                `;
+            } else if (q.graphId === 'compress_z') {
+                paths = `
+                    <line x1="35" y1="120" x2="285" y2="120" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="35" y1="120" x2="35" y2="12" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="35" y1="65" x2="280" y2="65" stroke="#22d3ee" stroke-width="1.6" stroke-dasharray="5 3"/>
+                    <path d="M 35 65 Q 130 120 180 65 T 265 18" fill="none" stroke="#f59e0b" stroke-width="2.6"/>
+                    <text x="24" y="68" fill="#22d3ee" font-size="9" font-weight="bold">1.0</text>
+                    <text x="160" y="135" text-anchor="middle" fill="#94a3b8" font-size="9">الضغط (P)</text>
+                    <text x="14" y="65" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(-90 14,65)">Z = PV/nRT</text>
+                `;
+            } else if (q.graphId === 'supercool') {
+                paths = `
+                    <line x1="35" y1="120" x2="285" y2="120" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="35" y1="120" x2="35" y2="12" stroke="#64748b" stroke-width="1.5"/>
+                    <path d="M 55 18 L 130 104 L 152 64 L 258 88" fill="none" stroke="#38bdf8" stroke-width="2.6"/>
+                    <line x1="108" y1="58" x2="152" y2="64" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="3 2"/>
+                    <text x="160" y="135" text-anchor="middle" fill="#94a3b8" font-size="9">زمن التبريد</text>
+                    <text x="16" y="68" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(-90 16,68)">الحرارة °C</text>
+                `;
+            } else {
+                paths = `
+                    <line x1="35" y1="120" x2="285" y2="120" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="35" y1="120" x2="35" y2="12" stroke="#64748b" stroke-width="1.5"/>
+                    <path d="M 45 78 L 85 78 Q 145 -18 205 102 L 265 102" fill="none" stroke="#94a3b8" stroke-width="2.2"/>
+                    <path d="M 85 78 Q 145 28 205 102" fill="none" stroke="#34d399" stroke-width="2.5" stroke-dasharray="4 3"/>
+                    <text x="64" y="72" fill="#cbd5e1" font-size="9">المتفاعلات</text>
+                    <text x="235" y="96" fill="#cbd5e1" font-size="9">النواتج</text>
+                    <text x="160" y="135" text-anchor="middle" fill="#94a3b8" font-size="9">سير التفاعل</text>
+                    <text x="16" y="68" text-anchor="middle" fill="#94a3b8" font-size="9" transform="rotate(-90 16,68)">الطاقة</text>
+                `;
+            }
+
+            const dots = q.hotspots.map(h => {
+                const isSel = selectedId === h.id;
+                let fill = '#fbbf24';
+                if (revealed) fill = h.correct ? '#10b981' : (isSel ? '#f43f5e' : '#64748b');
+                else if (isSel) fill = '#22d3ee';
+                return `
+                    <g onclick="selectHotspot('${q.id}', '${h.id}')" style="cursor:pointer;">
+                        <circle cx="${h.x}" cy="${h.y}" r="14" fill="${fill}" fill-opacity="0.25"/>
+                        <circle cx="${h.x}" cy="${h.y}" r="6.5" fill="${fill}" stroke="#fff" stroke-width="1.5"/>
+                    </g>
+                `;
+            }).join('');
+
+            return `
+                <div class="rounded-2xl bg-slate-950 p-2.5 border border-slate-700/80">
+                    <svg viewBox="0 0 300 142" class="w-full max-w-md mx-auto h-auto">${paths}${dots}</svg>
+                    <div class="flex flex-wrap justify-center gap-1.5 mt-2">
+                        ${q.hotspots.map(h => `
+                            <button onclick="selectHotspot('${q.id}', '${h.id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold border transition ${
+                                revealed && h.correct ? 'bg-emerald-500/20 border-eme
